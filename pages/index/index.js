@@ -46,7 +46,6 @@ Page({
     const type = e.currentTarget.dataset.type;
     let value = e.detail.value;
     
-
     let min = 0;
     let max = 0;
     
@@ -62,7 +61,6 @@ Page({
       // 写作翻译部分
       case 'writing': 
       case 'translation': 
-        min = 0; 
         max = 15; 
         break;
       default: 
@@ -112,9 +110,9 @@ Page({
     };
     
     // 计算听力原始分 (每题1分)
-    const listeningRaw = getNumValue(listening.conversation) + getNumValue(listening.passage) + getNumValue(listening.lecture)* 2;
+    const listeningRaw = getNumValue(listening.conversation) + getNumValue(listening.passage) + getNumValue(listening.lecture);
     // 听力满分25题，转换为248.5分
-    const listeningScore = (listeningRaw / 35) * 248.5;
+    const listeningScore = (listeningRaw / 25) * 248.5;
 
     // 计算阅读原始分
     // 选词填空：0.5分/题，长篇阅读：1分/题，仔细阅读：2分/题
