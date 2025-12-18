@@ -1,0 +1,198 @@
+<view class="container">
+    <!-- 顶部切换栏 -->
+    <view class="header">
+        <view class="tab-group">
+            <button class="tab-btn {{currentType === 4 ? 'active' : ''}}" bindtap="switchType" data-type="4">四级</button>
+            <button class="tab-btn {{currentType === 6 ? 'active' : ''}}" bindtap="switchType" data-type="6">六级</button>
+        </view>
+        <view class="difficulty-group">
+            <button class="difficulty-btn {{currentDifficulty === '难' ? 'active' : ''}}" bindtap="switchDifficulty" data-difficulty="难">难</button>
+            <button class="difficulty-btn {{currentDifficulty === '中' ? 'active' : ''}}" bindtap="switchDifficulty" data-difficulty="中">中</button>
+            <button class="difficulty-btn {{currentDifficulty === '易' ? 'active' : ''}}" bindtap="switchDifficulty" data-difficulty="易">易</button>
+        </view>
+    </view>
+
+    <!-- 中部录入区 -->
+    <view class="main">
+        <!-- 听力部分 -->
+        <view class="section">
+            <text class="section-title">听力部分</text>
+            <view class="item-group">
+                <view class="item">
+                    <text class="item-label">长对话</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="listening-conversation" min="0" max="8" value="{{listening.conversation}}" />
+                        <text class="item-desc">/ 8 题</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <text class="item-label">听力篇章</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="listening-passage" min="0" max="7" value="{{listening.passage}}" />
+                        <text class="item-desc">/ 7 题</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <text class="item-label">讲话 / 讲座</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="listening-lecture" min="0" max="10" value="{{listening.lecture}}" />
+                        <text class="item-desc">/ 10 题</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 阅读部分 -->
+        <view class="section">
+            <text class="section-title">阅读部分</text>
+            <view class="item-group">
+                <view class="item">
+                    <text class="item-label">选词填空</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="reading-fill" min="0" max="10" value="{{reading.fill}}" />
+                        <text class="item-desc">/ 10 题</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <text class="item-label">长篇阅读</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="reading-long" min="0" max="10" value="{{reading.long}}" />
+                        <text class="item-desc">/ 10 题</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <text class="item-label">仔细阅读</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" class="item-input" bindinput="onInput" data-type="reading-careful" min="0" max="10" value="{{reading.careful}}" />
+                        <text class="item-desc">/ 10 题</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 写作/翻译部分 -->
+        <view class="section">
+            <text class="section-title">写作 / 翻译部分</text>
+            <view class="item-group">
+                <view class="item">
+                    <text class="item-label">写作分值</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" step="0.5" class="item-input" bindinput="onInput" data-type="writing" min="0" max="15" value="{{writing}}" />
+                        <text class="item-desc">/ 15 分</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <text class="item-label">翻译分值</text>
+                    <view class="item-input-wrapper">
+                        <input type="number" step="0.5" class="item-input" bindinput="onInput" data-type="translation" min="0" max="15" value="{{translation}}" />
+                        <text class="item-desc">/ 15 分</text>
+                    </view>
+                </view>
+                <!-- 评分标准按钮 -->
+                <view class="score-standard-btn-wrapper">
+                    <button class="score-standard-btn" bindtap="toggleScoreStandard">{{isScoreStandardVisible ? '收起评分标准' : '查看评分标准'}}</button>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 底部结果区 -->
+    <view class="footer">
+        <view class="result-card">
+            <view class="result-item final-score">
+                <text class="result-label">最终预估分</text>
+                <text class="result-value">{{finalScore}}</text>
+            </view>
+            
+        </view>
+        
+        <!-- 计算分数按钮 -->
+        <view class="calculate-btn-wrapper">
+            <button class="calculate-btn" bindtap="calculateScore">计算分数</button>
+        </view>
+        
+        <text class="tips">分数仅供参考，官方成绩以考试院公布为准</text>
+    </view>
+    
+    <!-- 评分标准悬浮窗 -->
+    <view class="score-standard-modal" wx:if="{{isScoreStandardVisible}}">
+        <!-- 遮罩层 -->
+        <view class="modal-overlay" bindtap="toggleScoreStandard"></view>
+        <!-- 内容区域 -->
+        <view class="modal-content">
+            <!-- 头部 -->
+            <view class="modal-header">
+                <text class="modal-title">评分标准</text>
+                <view class="modal-close" bindtap="toggleScoreStandard">
+                    <text class="close-text">×</text>
+                </view>
+            </view>
+            <!-- 内容 -->
+            <view class="modal-body">
+                <view class="standard-text">
+                    <text>单题报道分≈该题原始小分 ÷15×106；最终的精准报道分，会通过官方常模公式（参照当期常模群体的均值和标准差）计算得出。</text>
+                </view>
+                
+                <view class="standard-section">
+                    <view class="section-title-small">作文评分标准</view>
+                    <view class="standard-list">
+                        <view class="standard-item">
+                            <text class="standard-score">13-15 分：</text>
+                            <text class="standard-desc">切题。表达思想清楚，文字通顺、连贯，基本上无语言错误，仅有个别小错。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">10-12 分：</text>
+                            <text class="standard-desc">切题。表达思想清楚，文字较连贯，但有少量语言错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">7-9 分：</text>
+                            <text class="standard-desc">基本切题。有些地方表达思想不够清楚，文字勉强连贯；语言错误相当多，其中有一些是严重错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">4-6 分：</text>
+                            <text class="standard-desc">基本切题。表达思想不清楚，连贯性差。有较多的严重语言错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">1-3 分：</text>
+                            <text class="standard-desc">条理不清，思路紊乱，语言支离破碎或大部分句子均有错误，且多数为严重错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">0 分：</text>
+                            <text class="standard-desc">未作答，或只有几个孤立的词，或作文与主题毫不相关。</text>
+                        </view>
+                    </view>
+                </view>
+                
+                <view class="standard-section">
+                    <view class="section-title-small">翻译评分标准</view>
+                    <view class="standard-list">
+                        <view class="standard-item">
+                            <text class="standard-score">13-15 分：</text>
+                            <text class="standard-desc">译文准确表达了原文的意思。用词贴切，行文流畅，基本上无语言错误，仅有个别小错。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">10-12 分：</text>
+                            <text class="standard-desc">译文基本上表达了原文的意思。文字通顺、连贯，无重大语言错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">7-9 分：</text>
+                            <text class="standard-desc">译文勉强表达了原文的意思。用词欠准确，语言错误相当多，其中有些是严重语言错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">4-6 分：</text>
+                            <text class="standard-desc">译文仅表达了一小部分原文的意思。用词不准确，有相当多的严重语言错误。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">1-3 分：</text>
+                            <text class="standard-desc">译文支离破碎。除个别词语或句子，绝大部分文字没有表达原文意思。</text>
+                        </view>
+                        <view class="standard-item">
+                            <text class="standard-score">0 分：</text>
+                            <text class="standard-desc">未作答，或只有几个孤立的词，或译文与原文毫不相关。</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部切换栏 -->
+        <header class="header">
+            <div class="tab-group">
+                <button class="tab-btn active" data-type="4">四级</button>
+                <button class="tab-btn" data-type="6">六级</button>
+            </div>
+            <div class="difficulty-group">
+                <button class="difficulty-btn active" data-difficulty="难">难</button>
+                <button class="difficulty-btn" data-difficulty="中">中</button>
+                <button class="difficulty-btn" data-difficulty="易">易</button>
+            </div>
+        </header>
+
+        <!-- 中部录入区 -->
+        <main class="main">
+            <!-- 听力部分 -->
+            <section class="section">
+                <h3 class="section-title">听力部分</h3>
+                <div class="item-group">
+                    <div class="item">
+                        <div class="item-label">长对话</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="listening-conversation" min="0" max="8" value="0">
+                            <span class="item-desc">/ 8 题</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-label">听力篇章</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="listening-passage" min="0" max="7" value="0">
+                            <span class="item-desc">/ 7 题</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-label">讲话 / 讲座</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="listening-lecture" min="0" max="10" value="0">
+                            <span class="item-desc">/ 10 题</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 阅读部分 -->
+            <section class="section">
+                <h3 class="section-title">阅读部分</h3>
+                <div class="item-group">
+                    <div class="item">
+                        <div class="item-label">选词填空</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="reading-fill" min="0" max="10" value="0">
+                            <span class="item-desc">/ 10 题</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-label">长篇阅读</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="reading-long" min="0" max="10" value="0">
+                            <span class="item-desc">/ 10 题</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-label">仔细阅读</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" class="item-input" id="reading-careful" min="0" max="10" value="0">
+                            <span class="item-desc">/ 10 题</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 写作/翻译部分 -->
+            <section class="section">
+                <h3 class="section-title">写作 / 翻译部分</h3>
+                <div class="item-group">
+                    <div class="item">
+                        <div class="item-label">写作分值</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" step="0.5" class="item-input" id="writing" min="0" max="15" value="0">
+                            <span class="item-desc">/ 15 分</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-label">翻译分值</div>
+                        <div class="item-input-wrapper">
+                            <input type="number" step="0.5" class="item-input" id="translation" min="0" max="15" value="0">
+                            <span class="item-desc">/ 15 分</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部结果区 -->
+        <footer class="footer">
+
+                <div class="result-item final-score">
+                    <span class="result-label">最终预估分</span>
+                    <span class="result-value" id="final-score">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">及格判定</span>
+                    <span class="result-value judgment" id="judgment">未过</span>
+                </div>
+            </div>
+            <p class="tips">分数仅供参考，官方成绩以考试院公布为准</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
